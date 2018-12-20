@@ -17,11 +17,18 @@
 
 .rcw-message {
   font-size: 14px;
+  position: relative;
+  padding-top: 20px;
+  .userNick {
+    position: absolute;
+    color: rgba(0, 0, 0, 0.5);
+    top: 0px;
+    left: 4px;
+  }
 }
 
 /* For markdown elements created with default styles */
 .rcw-message-text {
-
   p {
     margin: 0;
   }

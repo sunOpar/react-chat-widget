@@ -10,22 +10,34 @@ import './styles.scss';
 
 class Message extends PureComponent {
   render() {
+    const textData = this.props.message.get('text');
+    let text;
+    if (typeof textData === 'string') {
+      text = textData;
+    } else {
+      text = textData.content;
+    }
     const sanitizedHTML = markdownIt()
-    .use(markdownItSup)
-    .use(markdownItSanitizer)
-    .use(markdownItLinkAttributes, { attrs: { target: '_blank', rel: 'noopener' } })
-    .render(this.props.message.get('text'));
+      .use(markdownItSup)
+      .use(markdownItSanitizer)
+      .use(markdownItLinkAttributes, {
+        attrs: { target: '_blank', rel: 'noopener' },
+      })
+      .render(text);
 
     return (
       <div className={`rcw-${this.props.message.get('sender')}`}>
-        <div className="rcw-message-text" dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
+        <div
+          className="rcw-message-text"
+          dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+        />
       </div>
     );
   }
 }
 
 Message.propTypes = {
-  message: PROP_TYPES.MESSAGE
+  message: PROP_TYPES.MESSAGE,
 };
 
 export default Message;

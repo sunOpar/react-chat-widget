@@ -23,7 +23,7 @@ class Messages extends Component {
 
   getComponentToRender = message => {
     const ComponentToRender = message.get('component');
-    const previousMessage = this.props.messages.get()
+    const previousMessage = this.props.messages.get();
     if (message.get('type') === 'component') {
       return <ComponentToRender {...message.get('props')} />;
     }
@@ -35,21 +35,32 @@ class Messages extends Component {
     if (message.get('showAvatar') && previousMessage.get('showAvatar')) {
       this.props.dispatch(hideAvatar(index));
     }
-  }
+  };
 
   render() {
     const { messages, profileAvatar } = this.props;
+    console.log(
+      'messages: ',
+      messages.map(item => {
+        console.log('item: ', item.toJS());
+        return item;
+      })
+    );
     return (
       <div id="messages" className="rcw-messages-container">
-        {messages.map((message, index) =>
+        {messages.map((message, index) => (
           <div className="rcw-message" key={index}>
-            {profileAvatar &&
-              message.get('showAvatar') &&
+            {typeof message.get('text') !== 'string' && (
+              <span className="userNick">
+                {message.get('text')['userNick']}
+              </span>
+            )}
+            {profileAvatar && message.get('showAvatar') && (
               <img src={profileAvatar} className="rcw-avatar" alt="profile" />
-            }
+            )}
             {this.getComponentToRender(message)}
           </div>
-        )}
+        ))}
       </div>
     );
   }
@@ -57,9 +68,9 @@ class Messages extends Component {
 
 Messages.propTypes = {
   messages: ImmutablePropTypes.listOf(ImmutablePropTypes.map),
-  profileAvatar: PropTypes.string
+  profileAvatar: PropTypes.string,
 };
 
 export default connect(store => ({
-  messages: store.messages
+  messages: store.messages,
 }))(Messages);

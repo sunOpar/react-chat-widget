@@ -20,7 +20,13 @@ export const PROP_TYPES = {
       MESSAGES_TYPES.TEXT,
       MESSAGES_TYPES.SNIPPET.LINK
     ]),
-    text: PropTypes.string,
+    text: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        userNick: PropTypes.string,
+        content: PropTypes.string.isRequired
+      })
+    ]),
     sender: PropTypes.oneOf([
       MESSAGE_SENDER.CLIENT,
       MESSAGE_SENDER.RESPONSE

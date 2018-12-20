@@ -7,7 +7,8 @@ export default class App extends Component {
   }
 
   handleNewUserMessage = (newMessage) => {
-    addResponseMessage(newMessage);
+    console.log(newMessage)
+    addResponseMessage({content: newMessage, userNick: '张飞'});
   }
 
   render() {
